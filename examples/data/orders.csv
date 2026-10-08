@@ -1,0 +1,7 @@
+id,customer_id,amount,status
+101,1,60,shipped
+102,1,20,pending
+103,2,80,shipped
+104,3,90,pending
+105,5,100,shipped
+106,4,15,pending
