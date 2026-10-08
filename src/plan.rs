@@ -87,7 +87,7 @@ fn normalize_column(column: &Column, tables: &[&Table]) -> Result<Column, String
         [] => Err(format!("unknown column: {}", column.qualified())),
         [(table, name)] => Ok(Column {
             table: Some(table.name.clone()),
-            name: (*name).clone(),
+            name: name.to_string(),
         }),
         _ => Err(format!("ambiguous column: {}", column.qualified())),
     }
@@ -141,9 +141,9 @@ fn normalized_join(join: &Join, from: &Table, joined: &Table) -> Result<(Column,
     let tables = [from, joined];
     let a = normalize_column(&join.left, &tables)?;
     let b = normalize_column(&join.right, &tables)?;
-    if a.table.as_deref() == Some(&from.name) && b.table.as_deref() == Some(&joined.name) {
+    if a.table.as_deref() == Some(from.name.as_str()) && b.table.as_deref() == Some(joined.name.as_str()) {
         Ok((a, b))
-    } else if b.table.as_deref() == Some(&from.name) && a.table.as_deref() == Some(&joined.name) {
+    } else if b.table.as_deref() == Some(from.name.as_str()) && a.table.as_deref() == Some(joined.name.as_str()) {
         Ok((b, a))
     } else {
         Err("JOIN keys must reference opposite tables".into())
