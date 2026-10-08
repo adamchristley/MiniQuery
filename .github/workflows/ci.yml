@@ -1,0 +1,17 @@
+name: Rust CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Test
+        run: cargo test --all-targets
+      - name: Run example and print optimized plan
+        run: cargo run -- --explain --compare 10
