@@ -15,3 +15,7 @@ jobs:
         run: cargo test --all-targets
       - name: Run example and print optimized plan
         run: cargo run -- --explain --compare 10
+      - name: Generate deterministic synthetic benchmark
+        run: python3 scripts/generate_data.py --customers 100 --orders 1000 --seed 42 --output-dir benchdata
+      - name: Smoke test release build and benchmark CLI
+        run: cargo run --release -- --data-dir benchdata --compare 3 --query "SELECT customers.name, orders.amount FROM customers JOIN orders ON customers.id = orders.customer_id WHERE orders.amount >= 900 AND customers.region = 'US'"
