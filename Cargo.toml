@@ -1,0 +1,14 @@
+[package]
+name = "miniquery"
+version = "0.1.0"
+edition = "2021"
+description = "A small, dependency-free SQL parser, optimizer, and execution engine"
+license = "MIT"
+
+[lib]
+name = "miniquery"
+path = "src/lib.rs"
+
+[[bin]]
+name = "miniquery"
+path = "src/main.rs"
